@@ -21,7 +21,6 @@ private:
 	int motor_num;
 	void operate(int index);
 public:
-	void timer_set();
 	bool timer_flag;
 	m_pid(int m_num=2,int max_st=10);
 	int state;

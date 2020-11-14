@@ -27,9 +27,12 @@ void m_pid::pid_set(int index,double P,double I,double D){
 }
 void m_pid::operate(int index){
 	now_spd[index] = sp_fun[index]();
-	double err = (target[index] - abs(now_spd[index]));
+	double err = target[index] - abs(now_spd[index]);
 	double P = PID[index][0] * err;
-	I[index] += PID[index][1] * (err + err_pre[index]);
+	if(PID[index][1] != 0)
+		I[index] += PID[index][1] * (err + err_pre[index]);
+	else
+		I[index] =0;
 	double D = PID[index][2] * (err - err_pre[index]);
 	err_pre[index] = err;
 	double sum = P+I[index]+D;
@@ -62,6 +65,6 @@ void m_pid::set_target(int index,double src){
 	if(src>0)
 		to_dir[index] = 1;
 	else
-		to_dir[index] = 0;;
+		to_dir[index] = 0;
 	target[index] = abs(src);
 }
